@@ -1,97 +1,107 @@
 const quizData = [
   {
-    question: "How old is abasolo?",
-    a: "10",
-    b: "15",
-    c: "12",
-    d: "26",
-    correct: "d",
+    question: "how old is abasolo?",
+    a: "25",
+    b: "10",
+    c: "15",
+    d: "20",
+    answer: "a",
   },
+
   {
-    question: "most used programming Language",
-    a: "java",
-    b: "python",
-    c: "javascript",
-    d: "PHP",
-    correct: "a",
+    question: "what is the favorite hero of abasol?",
+    a: "spectre",
+    b: "terroblade",
+    c: "invoker",
+    d: "anti-mage",
+    answer: "b",
   },
+
   {
-    question: "best hero of ame",
-    a: "Tiny",
-    b: "abaddon",
-    c: "Spectre",
-    d: "Terrorblade",
-    correct: "c",
+    question: "favorite food of abasol?",
+    a: "chicken",
+    b: "siomai",
+    c: "balut",
+    d: "takoyaki",
+    answer: "b",
   },
+
   {
-    question: "who is the champion of T.I 11",
-    a: "Team spirit",
-    b: "Team Liquid",
-    c: "Tundra Esports",
-    d: "Blacklist Rivalry",
-    correct: "c",
+    question: "favorite int hero?",
+    a: "invoker",
+    b: "windranger",
+    c: "pugna",
+    d: "lion",
+    answer: "a",
   },
+
   {
-    question: "who is the champion of Lima Major",
-    a: "Gaimin Gladiators",
-    b: "Team Liquid",
-    c: "Talon Esports",
-    d: "Team Spirit",
-    correct: "a",
+    question: "favorite programming language?",
+    a: "Javascript",
+    b: "Java",
+    c: "C++",
+    d: "C#",
+    answer: "a",
   },
 ];
 
-let currentQuiz = 0;
-let score = 0;
-const question = document.getElementById("Question");
+const questionHolder = document.getElementById("Question");
 const c_a = document.getElementById("a_text");
 const c_b = document.getElementById("b_text");
 const c_c = document.getElementById("c_text");
 const c_d = document.getElementById("d_text");
-const submit = document.getElementById("submit");
-const selectEl = document.querySelectorAll(".answer");
-const quizz = document.getElementById("quiz");
+const submits = document.getElementById("submit");
+const answerEl = document.querySelectorAll(".answer");
+const results = document.getElementById("quiz");
+
+let currentQuiz = 0;
+let score = 0;
+
 const loadQuiz = () => {
-  const Quiz = quizData[currentQuiz];
-  question.innerText = Quiz.question;
-  c_a.innerText = Quiz.a;
-  c_b.innerText = Quiz.b;
-  c_c.innerText = Quiz.c;
-  c_d.innerText = Quiz.d;
+  questionHolder.innerHTML = quizData[currentQuiz].question;
+  c_a.innerHTML = quizData[currentQuiz].a;
+  c_b.innerHTML = quizData[currentQuiz].b;
+  c_c.innerHTML = quizData[currentQuiz].c;
+  c_d.innerHTML = quizData[currentQuiz].d;
   deSelect();
 };
 
 const deSelect = () => {
-  selectEl.forEach((selectEls) => {
-    if (selectEls) {
-      selectEls.checked = false;
+  answerEl.forEach((answerEls) => {
+    if (answerEls) {
+      answerEls.checked = false;
     }
   });
 };
 
 const Select = () => {
   let answer = undefined;
-  selectEl.forEach((selectEls) => {
-    if (selectEls.checked) {
-      answer = selectEls.id;
+  answerEl.forEach((answerEls) => {
+    if (answerEls.checked) {
+      answer = answerEls.id;
     }
   });
   return answer;
 };
 
-submit.addEventListener("click", () => {
+submits.addEventListener("click", () => {
+  const currentQuizes = quizData[currentQuiz];
   const test = Select();
   console.log(test);
   if (test) {
-    if (test === quizData[currentQuiz].correct) {
+    if (test == currentQuizes.answer) {
       score++;
     }
     currentQuiz++;
     if (currentQuiz < quizData.length) {
       loadQuiz();
     } else {
-      quizz.innerHTML = `congratulations you have reached the bottom your score is ${score} over ${quizData.length} <button onClick="location.reload()">Reload Quiz</button>`;
+      results.innerHTML = `
+      <h2>Your result is ${score} over ${quizData.length}</h2>
+      <button onClick=location.reload()>Reload Question</button>
+      `;
     }
   }
 });
+
 loadQuiz();
